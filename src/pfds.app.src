@@ -1,0 +1,12 @@
+%% vim: set ft=erlang : -*- erlang -*-
+{application, pfds,
+ [
+  {description, "An Erlang implementation of the data structures described in 『Purely Functional Data Structures』"},
+  {vsn, git},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
