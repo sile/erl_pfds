@@ -1,14 +1,14 @@
 %% @doc Figure 2.9. Implementation of binary search trees
--module(ch01_unbalanced_set).
+-module(ch02_unbalanced_set).
 
--behaviour(ch01_set).
+-behaviour(ch02_set).
 
 -export([empty/0, member/2, insert/2]).
 -export_type([set/0]).
 
 -opaque set() :: tree().
 -type tree() :: empty | {tree, tree(), elem(), tree()}.
--type elem() :: ch01_set:elem().
+-type elem() :: ch02_set:elem().
 
 -spec empty() -> set().
 empty() -> empty.

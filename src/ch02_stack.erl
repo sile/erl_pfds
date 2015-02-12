@@ -1,5 +1,5 @@
 %% @doc Figure2.1. Signature for stacks
--module(ch01_stack).
+-module(ch02_stack).
 
 -export_type([stack/0, elem/0]).
 

@@ -1,5 +1,5 @@
 %% @doc Figure 2.7. Signature for sets
--module(ch01_set).
+-module(ch02_set).
 
 -export_type([set/0, elem/0]).
 
