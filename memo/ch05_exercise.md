@@ -9,49 +9,49 @@ see: [ch05_batched_deque.erl](../src/ch05_batched_deque.erl)
 
 ポテンシャル関数:
 ```
-FAI({f,r}) = abs(|f| - |r|)
+PHI({f,r}) = abs(|f| - |r|)
 ```
 
 償却コスト:
 ```
 cons:
-  A(Q) = T(Q) + FAI(Q') - FAI(Q)
+  A(Q) = T(Q) + PHI(Q') - PHI(Q)
          {let tmpQ = input of checkr/1 and T(Q) = 1 + checkr:T(tmpQ)}
-       = 1 + checkr:T(tmpQ) + FAI(Q') - FAI(Q)
+       = 1 + checkr:T(tmpQ) + PHI(Q') - PHI(Q)
        if |f| < |r|
-           {FAI(tmpQ) = FAI(Q) - 1 then FAI(Q) = FAI(tmpQ) + 1}
-         = 1 + checkr:T(tmpQ) + FAI(Q') - FAI(tmpQ) - 1
-         = checkr:T(tmpQ) + FAI(Q') - FAI(tmpQ)
+           {PHI(tmpQ) = PHI(Q) - 1 then PHI(Q) = PHI(tmpQ) + 1}
+         = 1 + checkr:T(tmpQ) + PHI(Q') - PHI(tmpQ) - 1
+         = checkr:T(tmpQ) + PHI(Q') - PHI(tmpQ)
          = checkr:A(tmpQ)
          = 1
        else
-           {FAI(tmpQ) = FAI(Q) + 1 then FAI(Q) = FAI(tmpQ) - 1}
-         = 1 + checkr:T(tmpQ) + FAI(Q') - FAI(tmpQ) + 1
-         = 2 + checkr:T(tmpQ) + FAI(Q') - FAI(tmpQ)
+           {PHI(tmpQ) = PHI(Q) + 1 then PHI(Q) = PHI(tmpQ) - 1}
+         = 1 + checkr:T(tmpQ) + PHI(Q') - PHI(tmpQ) + 1
+         = 2 + checkr:T(tmpQ) + PHI(Q') - PHI(tmpQ)
          = 2 + checkr:A(tmpQ)
          =< 3
        end
 
 head:
   T(Q) = 1
-  A(Q) = T(Q) + FAI(Q`) - FAI(Q)
-         {T(Q) = 1 and FAI(Q') = FAI(Q)}
+  A(Q) = T(Q) + PHI(Q`) - PHI(Q)
+         {T(Q) = 1 and PHI(Q') = PHI(Q)}
        = 1
 
 tail:
-  A(Q) = T(Q) + FAI(Q') - FAI(Q)
+  A(Q) = T(Q) + PHI(Q') - PHI(Q)
          {let tmpQ = input of checkf/1 and T(Q) = 1 + checkr:T(tmpQ)}
-       = 1 + checkf:T(tmpQ) + FAI(Q') - FAI(Q)
+       = 1 + checkf:T(tmpQ) + PHI(Q') - PHI(Q)
        if |f| > |r|
-           {FAI(tmpQ) = FAI(Q) - 1 then FAI(Q) = FAI(tmpQ) + 1}
-         = 1 + checkf:T(tmpQ) + FAI(Q') - FAI(tmpQ) - 1
-         = checkf:T(tmpQ) + FAI(Q') - FAI(tmpQ)
+           {PHI(tmpQ) = PHI(Q) - 1 then PHI(Q) = PHI(tmpQ) + 1}
+         = 1 + checkf:T(tmpQ) + PHI(Q') - PHI(tmpQ) - 1
+         = checkf:T(tmpQ) + PHI(Q') - PHI(tmpQ)
          = checkf:A(tmpQ)
          = 1
        else
-           {FAI(tmpQ) = FAI(Q) + 1 then FAI(Q) = FAI(tmpQ) - 1}
-         = 1 + checkf:T(tmpQ) + FAI(Q') - FAI(tmpQ) + 1
-         = 2 + checkf:T(tmpQ) + FAI(Q') - FAI(tmpQ)
+           {PHI(tmpQ) = PHI(Q) + 1 then PHI(Q) = PHI(tmpQ) - 1}
+         = 1 + checkf:T(tmpQ) + PHI(Q') - PHI(tmpQ) + 1
+         = 2 + checkf:T(tmpQ) + PHI(Q') - PHI(tmpQ)
          = 2 + checkf:A(tmpQ)
          =< 3
        end
@@ -66,18 +66,18 @@ init:
   tailとほぼ同様なので省略
 
 checkr:
-  A(Q) = T(Q) + FAI(Q') - FAI(Q)
+  A(Q) = T(Q) + PHI(Q') - PHI(Q)
        if |f| < 2 or |r| != 0
-           {FAI(Q') = FAI(Q)}
+           {PHI(Q') = PHI(Q)}
          = T(Q)
          = 1
        else
            {T(Q) = |f|}
-         = |f| + FAI(Q') - FAI(Q)
-           {FAI(Q) = |f|}
-         = |f| + FAI(Q') - |f|
-         = FAI(Q')
-           {FAI(Q') = (|f| rem 2 = 0 ? 0 : 1) =< 1}
+         = |f| + PHI(Q') - PHI(Q)
+           {PHI(Q) = |f|}
+         = |f| + PHI(Q') - |f|
+         = PHI(Q')
+           {PHI(Q') = (|f| rem 2 = 0 ? 0 : 1) =< 1}
          =< 1
 
 checkf:
@@ -94,17 +94,17 @@ Exercise 5.3
 
 ポテンシャル関数:
 ```
-FAI(H) = |H| % the number of trees in the heap
+PHI(H) = |H| % the number of trees in the heap
 ```
 
 償却計算量:
 ```
 merge:
-  A(H1, H2) = T(H1, H2) + FAI(H`) - FAI(H1) - FAI(H2)
+  A(H1, H2) = T(H1, H2) + PHI(H`) - PHI(H1) - PHI(H2)
             if H1 = []
-                {T(H1, H2) = 1 and FAI(H1) = 0}
-              = 1 + FAI(H`) - FAI(H2)
-                {FAI(H`) = FAI(H2)}
+                {T(H1, H2) = 1 and PHI(H1) = 0}
+              = 1 + PHI(H`) - PHI(H2)
+                {PHI(H`) = PHI(H2)}
               = 1
             elif H2 = []
                 {H1 = [] のケースと同様}
@@ -126,7 +126,7 @@ merge:
             =< log(size(H'))
 
 delete_min:
-  A(H) = T(H) + FAI(H`) - FAI(H)
+  A(H) = T(H) + PHI(H`) - PHI(H)
          {expand and let {H1, H2} = remove_min_tree(H)}
        = remove_min_tree:A(H) + merge:A(H1, H2) + |H1|
          {remove_min_tree:A(H) = 2|H| - 2}
@@ -141,13 +141,13 @@ delete_min:
        = O(log(size(H)))
 
 remove_min_tree: % 便宜上、この関数は {[tree()], [tree()]} を返すものとする
-  A(H) = T(H) + FAI(H1`) + FAI(H2`) - FAI(H)
-         {T(H) = |H| and FAI(H) = |H|}
-       = |H| + FAI(H1`) + FAI(H2`) - |H|
-       = FAI(H1`) + FAI(H2`)
-         {FAI(H2`) = |H| - 1}
-       = FAI(H1`) + |H| - 1
-         {FAI(H1`) =< |H| - 1}
+  A(H) = T(H) + PHI(H1`) + PHI(H2`) - PHI(H)
+         {T(H) = |H| and PHI(H) = |H|}
+       = |H| + PHI(H1`) + PHI(H2`) - |H|
+       = PHI(H1`) + PHI(H2`)
+         {PHI(H2`) = |H| - 1}
+       = PHI(H1`) + |H| - 1
+         {PHI(H1`) =< |H| - 1}
        =< |H| - 1 + |H| - 1
        =< 2|H| - 2
          {|H| =< log(size(H))}
