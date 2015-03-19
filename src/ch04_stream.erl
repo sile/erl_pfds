@@ -2,6 +2,7 @@
 -module(ch04_stream).
 
 -export([nil/0, cons/2, force/1, append/2, take/2, drop/2, reverse/1]).
+-export([head/1, tail/1]).
 -export_type([stream/0, stream_cell/0, elem/0]).
 
 -type stream_cell() :: nil | {elem(), stream()}.
@@ -65,3 +66,17 @@ force({lazy, S}) ->
     {ok, Val} = get({memo, S}),
     Val;
 force(Forced) -> Forced.
+
+-spec head(stream()) -> elem().
+head(Xs) ->
+    case force(Xs) of
+        nil    -> error(badarg, [Xs]);
+        {X, _} -> X
+    end.
+
+-spec tail(stream()) -> elem().
+tail(Xs) ->
+    case force(Xs) of
+        nil     -> error(badarg, [Xs]);
+        {_, Ys} -> Ys
+    end.
